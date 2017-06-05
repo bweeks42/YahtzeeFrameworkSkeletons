@@ -6,6 +6,9 @@
 
 package yahtzeeframework;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -14,28 +17,31 @@ import org.json.JSONObject;
  */
 public class JahtzeeDie {
 
-    static JahtzeeDie createDie(JSONObject face) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private List<JahtzeeFace> faces;
+    private int faceUp;
+    
+    private JahtzeeDie(List<JahtzeeFace> faces) {
+        this.faces = faces;
+    }
+    
+    static JahtzeeDie createDie(JSONArray faceArr) {
+        List<JahtzeeFace> faces = new ArrayList<>();
+        for (int ind = 0; ind < faceArr.length(); ind++) {
+            faces.add(JahtzeeFace.createFace(faceArr.getJSONObject(ind)));
+        }
+        return new JahtzeeDie(faces);
+    }
+    
+    public void roll(int faceUp) {
+        this.faceUp = faceUp;
     }
 
-    String getFace() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public String getFaceUp() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    boolean canRoll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    boolean isHeld() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getFaceUpImage() {
+        return faces.get(faceUp).image;
     }
 
     String getFaceUpString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return faces.get(faceUp).tooltip;
     }
     
 }

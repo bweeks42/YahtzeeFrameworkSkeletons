@@ -74,11 +74,11 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
             // Set the rolling button disabled if rolling is disabled
             btnRoll.setEnabled(game.canRoll());
             // Update the roll counter
-            lblRollCount.setText(game.getRollCount());
+            lblRollCount.setText(Integer.toString(game.getRollCount()));
             // Update the subtotal and total scores
             lblFaceValSubtotal.setText(Integer.toString(game.getFaceScore()));
             lblComboSubtotal.setText(Integer.toString(game.getComboScore()));
-            lblTotalScore.setText(game.getTotalScore());
+            lblTotalScore.setText(Integer.toString(game.getTotalScore()));
 
             // Show the bonus indicator if earned
             lblBonus.setVisible(game.isBonus());
@@ -184,7 +184,7 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
             if (dieCount < rolled.size()) {
                 currentJDie = rolled.get(dieCount);
                 ImageIcon ico;
-                ico = createImage(gameName, currentJDie.getFaceUp());
+                ico = createImage(gameName, currentJDie.getFaceUpImage());
                 currentDie.setIcon(ico);
                 currentDie.setToolTipText(currentJDie.getFaceUpString());
                 // action commands will be of form ("r0", "r1", etc.)
@@ -198,7 +198,7 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
             if (dieCount >= rolled.size()) {
                 currentJDie = rolled.get(dieCount - rolled.size());
                 ImageIcon ico;
-                ico = createImage(gameName, currentJDie.getFaceUp());
+                ico = createImage(gameName, currentJDie.getFaceUpImage());
                 currentDie.setIcon(ico);
                 currentDie.setToolTipText(currentJDie.getFaceUpString());
                 // action commands will be of form ("h0", "h1", etc.)

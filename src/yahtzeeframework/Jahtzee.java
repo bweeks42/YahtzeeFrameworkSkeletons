@@ -25,7 +25,6 @@ public class Jahtzee extends Observable {
     private final JahtzeeGame plugin;
     private final NumberGenerator generator;
     private int maxDice;
-    private int numFaces;
     private int total;
     private int rolls;
     private int faceSubtotal;
@@ -33,6 +32,12 @@ public class Jahtzee extends Observable {
 
     private final List<JahtzeeCategory> combos;
     private final List<JahtzeeCategory> faces;
+    
+    private final List<JahtzeeDie> held;
+    private final List<JahtzeeDie> rolled;
+    private final List<JahtzeeDie> dice;
+    
+    private final List<JahtzeeBonus> bonuses;
 
     public Jahtzee(JahtzeeGame plugin, String pluginPackage,
             NumberGenerator generator) {
@@ -40,6 +45,10 @@ public class Jahtzee extends Observable {
         this.generator = generator;
         this.combos = new ArrayList<>();
         this.faces = new ArrayList<>();
+        this.held = new ArrayList<>();
+        this.rolled = new ArrayList<>();
+        this.dice = new ArrayList<>();
+        this.bonuses = plugin.getBonuses();
         parseConfig(pluginPackage);
     }
 
@@ -60,10 +69,21 @@ public class Jahtzee extends Observable {
         System.out.println(configObj.keySet());
         maxDice = configObj.getInt("num_dice");
         JSONArray faceArr = configObj.getJSONArray("faces");
-        initFaces(faceArr);
+        initDice(faceArr);
+        initFaceCategories(faceArr);
+    }
+    
+    public void roll() {
+        this.rolls += 1;
     }
 
-    private void initFaces(JSONArray faceArr) {
+    private void initDice(JSONArray faceArr) {
+        for (int diceInd = 0; diceInd < maxDice; diceInd++) {
+            this.dice.add(JahtzeeDie.createDie(faceArr));
+        }
+    }
+    
+    private void initFaceCategories(JSONArray faceArr) {
         for (int ind = 0; ind < faceArr.length(); ind++) {
             JSONObject face = faceArr.getJSONObject(ind);
             JahtzeeCategory cat = JahtzeeFaceCategory.createCategory(face);
@@ -74,59 +94,71 @@ public class Jahtzee extends Observable {
     }
 
     int getDiceLimit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    List<JahtzeeDie> getDice() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.maxDice;
     }
 
     boolean canRoll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return !isGameOver() && rolls < getRollsPerRound();
+    }
+    
+    private int getRollsPerRound() {
+        return this.combos.size() + this.faces.size();
+    }
+    
+    boolean isGameOver() {
+        return false;
     }
 
     boolean canMoveDice() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return false;
+    }
+    
+    public List<JahtzeeDie> getDice() {
+        return dice;
     }
 
     public List<JahtzeeCategory> getFaceCategories() {
-        return null;
+        return faces;
     }
 
     public List<JahtzeeCategory> getComboCategories() {
-        return null;
+        return combos;
     }
 
     boolean canScore() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     int getFaceScore() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.faceSubtotal;
     }
 
     int getComboScore() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.comboSubtotal;
     }
 
-    String getTotalScore() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    int getTotalScore() {
+        return this.total;
     }
 
     boolean isBonus() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean isBonus = false;
+        for (JahtzeeBonus bonus : bonuses) {
+            isBonus |= bonus.isActive();
+        }
+        
+        return isBonus;
     }
 
-    String getRollCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    int getRollCount() {
+        return this.rolls;
     }
 
     List<JahtzeeDie> getRolled() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.rolled;
     }
 
     List<JahtzeeDie> getHeld() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.held;
     }
-
 }

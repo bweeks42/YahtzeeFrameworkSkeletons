@@ -6,20 +6,25 @@
          "name": "ones",
          "tooltip": "1"},
         {"image": "face2.png",
-         "value": 2,
-         "name": "twos"
+         "value": 0,
+         "name": "",
+         "tooltip": "2"
          },
         {"image": "face3.png",
          "value": 3,
-         "name": "threes"},
+         "name": "threes",
+         "tooltip": "3"},
         {"image": "face4.png",
-         "value": 4,
-         "name": ""},
+         "value": 0,
+         "name": "",
+         "tooltip": "4"},
         {"image": "face5.png",
-         "value": 5,
-         "name": ""},
+         "value": 0,
+         "name": "",
+         "tooltip": "5"},
         {"image": "face6.png",
          "value": 10,
-         "name": "sixes"}
+         "name": "sixes",
+         "tooltip": "6"}
     ]
 }

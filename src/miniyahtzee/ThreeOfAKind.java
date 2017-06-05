@@ -40,7 +40,7 @@ public class ThreeOfAKind implements JahtzeeCategory {
                 for (JahtzeeDie die2 : dice) {
                     // skip same object, not equivalent
                     if (die1 != die2) {
-                        if (die1.getFaceUp().equals(die2.getFaceUp())) {
+                        if (die1.getFaceUpImage().equals(die2.getFaceUpImage())) {
                             numEqual += 1;
                         }
                     }

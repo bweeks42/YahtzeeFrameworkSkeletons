@@ -59,6 +59,7 @@ public class YahtzeeLoader {
         if (plugin != null) {
             gui = new YahtzeeGUI(pluginName, controller,
                     jahtzee.getDiceLimit());
+            jahtzee.addObserver(gui);
         } else {
             gui = null;
         }

@@ -11,5 +11,5 @@ package yahtzeeframework;
  * @author Blain
  */
 public interface JahtzeeBonus {
-    
+    public boolean isActive();
 }

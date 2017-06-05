@@ -47,7 +47,7 @@ class JahtzeeFaceCategory implements JahtzeeCategory {
     public int getCurrentScore(List<JahtzeeDie> dice) {
         int currentScore = 0;
         for (JahtzeeDie die : dice) {
-            if (die.getFaceUp().equals(name)) {
+            if (die.getFaceUpImage().equals(name)) {
                 
             }
         }
