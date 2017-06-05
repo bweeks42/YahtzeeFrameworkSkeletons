@@ -1,0 +1,22 @@
+{
+    "num_dice": 6,
+    "faces": [
+        {"image": "facecyan.png",
+         "value": 1,
+         "name": "cyans",
+         "hasCategory": true},
+        {"image": "faceorange.png",
+         "value": 2,
+         "name": "oranges"
+         },
+        {"image": "facepink.png",
+         "value": 3,
+         "name": "pinks"},
+        {"image": "facegreen.png",
+         "value": 4,
+         "name": "greens"},
+        {"image": "faceblue.png",
+         "value": 5,
+         "name": "blues"}
+    ]
+}

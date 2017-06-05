@@ -1,0 +1,25 @@
+{
+    "num_dice": 5,
+    "faces": [
+        {"image": "face1.png",
+         "value": 1,
+         "name": "ones",
+         "tooltip": "1"},
+        {"image": "face2.png",
+         "value": 2,
+         "name": "twos"
+         },
+        {"image": "face3.png",
+         "value": 3,
+         "name": "threes"},
+        {"image": "face4.png",
+         "value": 4,
+         "name": ""},
+        {"image": "face5.png",
+         "value": 5,
+         "name": ""},
+        {"image": "face6.png",
+         "value": 10,
+         "name": "sixes"}
+    ]
+}
