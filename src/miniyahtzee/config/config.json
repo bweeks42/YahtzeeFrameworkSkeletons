@@ -1,5 +1,6 @@
 {
     "num_dice": 5,
+    "num_rolls": 3,
     "faces": [
         {"image": "face1.png",
          "value": 1,
@@ -7,7 +8,7 @@
          "tooltip": "1"},
         {"image": "face2.png",
          "value": 0,
-         "name": "",
+         "name": "twos",
          "tooltip": "2"
          },
         {"image": "face3.png",
@@ -16,11 +17,11 @@
          "tooltip": "3"},
         {"image": "face4.png",
          "value": 0,
-         "name": "",
+         "name": "fours",
          "tooltip": "4"},
         {"image": "face5.png",
          "value": 0,
-         "name": "",
+         "name": "fives",
          "tooltip": "5"},
         {"image": "face6.png",
          "value": 10,

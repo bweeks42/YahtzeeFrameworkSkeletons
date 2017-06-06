@@ -6,10 +6,13 @@
 
 package yahtzeeframework;
 
+import java.util.List;
+
 /**
  *
  * @author Blain
  */
 public interface JahtzeeBonus {
-    public boolean isActive();
+    public int getScore(List<JahtzeeCategory> faces, 
+            List<JahtzeeCategory> combos);
 }

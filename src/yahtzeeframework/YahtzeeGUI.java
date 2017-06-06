@@ -3,7 +3,7 @@ package yahtzeeframework;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
+import java.io.File;
 import java.util.List;
 import java.util.Observable;
 import javax.swing.ImageIcon;
@@ -19,7 +19,8 @@ import javax.swing.UIManager;
  *
  * @author your name
  */
-public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
+public class YahtzeeGUI extends javax.swing.JFrame implements I_View
+{
 
     private final static int kCategoryRowLimit = 10;
     private String gameName;  // The name of the game of yahtzee being played
@@ -32,11 +33,14 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
      * @param name The plugin name that will be displayed in the window title.
      * Also used to locate the folder in which images are stored.
      */
-    public YahtzeeGUI(String name, JahtzeeController controller, int maxDice) {
-        try {
+    public YahtzeeGUI(String name, JahtzeeController controller, int maxDice)
+    {
+        try
+        {
             String cn = UIManager.getSystemLookAndFeelClassName();
             UIManager.setLookAndFeel(cn);
-        } catch (Exception cnf) {
+        } catch (Exception cnf)
+        {
             cnf.printStackTrace();
         }
         this.gameName = name;
@@ -45,15 +49,17 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
         this.setTitle(name + " Yahtzee");
 
         initComponents();
+        btnRoll.setActionCommand("l");
+        btnRoll.addActionListener(controller);
 
         // Call createDicePanels to create combination and face value areas
         createDicePanels(maxDice);
 
-        // Create dice areas
-        createDicePanels(maxDice);
         lblBonus.setVisible(false);  // turn off bonus indicator to start
         // Add listeners
         exitMenuItem.addActionListener(new MyQuitListener());
+        newGameMenuItem.addActionListener(controller);
+        newGameMenuItem.setActionCommand("n");
     }
 
     /**
@@ -62,15 +68,20 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
      * @param obs the observable who notified us
      * @param arg not used
      */
-    public void update(Observable obs, Object arg) {
-        if (obs != null) {
+    @Override
+    public void update(Observable obs, Object arg)
+    {
+        if (obs != null)
+        {
             Jahtzee game = (Jahtzee) obs;
-            // Draw the dice rolling and holding areas
+            // Draw the dice rolling and holding area
             drawDice(game);
             // Draw the Face Values categories
-            drawRowsForCategory(pnlFaceValues, game, game.getFaceCategories());
+            drawRowsForCategory(pnlFaceValues, game, game.getFaceCategories(),
+                    "f");
             // Draw the Combination categories
-            drawRowsForCategory(pnlCombos, game, game.getComboCategories());
+            drawRowsForCategory(pnlCombos, game, game.getComboCategories(),
+                    "c");
             // Set the rolling button disabled if rolling is disabled
             btnRoll.setEnabled(game.canRoll());
             // Update the roll counter
@@ -95,36 +106,42 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
      * @param handler Action listener to be added to each button
      */
     private void drawRowsForCategory(JPanel dest, Jahtzee game,
-            List<JahtzeeCategory> categories) {
+            List<JahtzeeCategory> categories, String prefix)
+    {
         dest.removeAll();
         // Draw as many rows as the panel permits
-        for (int row = 1; row <= kCategoryRowLimit; row++) {
+        for (int row = 1; row <= kCategoryRowLimit; row++)
+        {
             ScoreRow scorerow = new ScoreRow("row" + row, controller);
             // IF this row # < number of categories THEN
-            if (row < categories.size()) {
+            if (row <= categories.size())
+            {
                 // Get the category to be shown
-                JahtzeeCategory category = categories.get(row);
+                JahtzeeCategory category = categories.get(row - 1);
                 // IF this category is available to be scored THEN
-                if (category.canScore()) {
+                if (category.canScore())
+                {
                     // Set the fields for this row
                     scorerow.setFields(
                             Integer.toString(
-                                    category.getCurrentScore(game.getDice())),
-                            "c" + row,
+                                    category.calculateScore(game.getDice())),
+                            prefix + row,
                             category.getName());
                     // If scoring is inactive the buttons should be shown grey
                     scorerow.setEnabled(game.canScore());
-                } else {
+                } else
+                {
                     // show score assigned to this category
                     scorerow.setFields(
                             "",
                             "c" + row,
                             "<HTML><B>&nbsp;" + Integer.toString(
-                                    category.getCurrentScore(game.getDice()))
+                                    category.calculateScore(game.getDice()))
                             + "</B>&nbsp;&nbsp;&nbsp;"
                             + category.getName() + "</HTML>");
                 } // END IF
-            } else {
+            } else
+            {
                 // set invisible: unused rows take up space but aren't visible
                 scorerow.setVisible(false);
             }
@@ -140,15 +157,19 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
      * attribute values but will NOT recreate the buttons. Don't change.
      * @param diceLimit the number of dice used in this game
      */
-    private void createDicePanels(int diceLimit) {
+    private void createDicePanels(int diceLimit)
+    {
         // Make a button with a sample image for each allowed die in the game
-        for (int dieCount = 0; dieCount < diceLimit; dieCount += 1) {
+        for (int dieCount = 0; dieCount < diceLimit; dieCount += 1)
+        {
             /* Rolling die */
             JButton die = new JButton(createImage(gameName, "sample"));
             setButtonAttributes(die, "die", (dieCount + 1));
+            die.addActionListener(controller);
             pnlDice.add(die);
             /* Held die */
             JButton die2 = new JButton(createImage(gameName, "sample"));
+            die2.addActionListener(controller);
             setButtonAttributes(die2, "held", (dieCount + 1));
             pnlHold.add(die2);
         }
@@ -157,7 +178,8 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
     }
 
     /* Apply desired button attributes to a die buttons - don't change */
-    private void setButtonAttributes(JButton die, String prefix, int id) {
+    private void setButtonAttributes(JButton die, String prefix, int id)
+    {
         die.setName(prefix + id);
         die.setEnabled(false);
         die.setVisible(false);  // make true for demo
@@ -170,45 +192,54 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
     /**
      * TODO rework this method
      */
-    private void drawDice(Jahtzee game) {
+    private void drawDice(Jahtzee game)
+    {
 
         List<JahtzeeDie> rolled = game.getRolled();
         List<JahtzeeDie> held = game.getHeld();
 
         // Draw the number of dice allowed in the game
-        for (int dieCount = 0; dieCount < maxDice; dieCount += 1) {
+        for (int dieCount = 0; dieCount < maxDice; dieCount += 1)
+        {
             JButton currentDie = (JButton) pnlDice.getComponent(dieCount);
             JahtzeeDie currentJDie;
             // Draw the Rolled Dice
 
-            if (dieCount < rolled.size()) {
+            if (dieCount < rolled.size())
+            {
                 currentJDie = rolled.get(dieCount);
                 ImageIcon ico;
                 ico = createImage(gameName, currentJDie.getFaceUpImage());
                 currentDie.setIcon(ico);
-                currentDie.setToolTipText(currentJDie.getFaceUpString());
+                currentDie.setToolTipText(currentJDie.getFaceUpTip());
                 // action commands will be of form ("r0", "r1", etc.)
                 currentDie.setActionCommand("r" + dieCount);
                 currentDie.setEnabled(game.canMoveDice());  // only enable if we can roll
                 currentDie.setVisible(true);
 
-            } else {
+            } else
+            {
                 currentDie.setVisible(false);
             }
-            if (dieCount >= rolled.size()) {
-                currentJDie = rolled.get(dieCount - rolled.size());
+            
+            currentDie = (JButton) pnlHold.getComponent(dieCount);
+            if (dieCount >= rolled.size() && 
+                    dieCount - rolled.size() < held.size())
+            {
+                currentJDie = held.get(dieCount - rolled.size());
                 ImageIcon ico;
                 ico = createImage(gameName, currentJDie.getFaceUpImage());
                 currentDie.setIcon(ico);
-                currentDie.setToolTipText(currentJDie.getFaceUpString());
+                currentDie.setToolTipText(currentJDie.getFaceUpTip()); //
                 // action commands will be of form ("h0", "h1", etc.)
-                currentDie.setActionCommand("h" + dieCount);
-                currentDie.setEnabled(game.canMoveDice());  // only enable if we can roll
+                currentDie.setActionCommand("h" + (dieCount - rolled.size()));
+                currentDie.setEnabled(game.canMoveDice()); // only enable if we can roll 
                 currentDie.setVisible(true);
-
-            } else {
+            } else
+            {
                 currentDie.setVisible(false);
             }
+
         }
         pnlDice.validate();
         pnlHold.validate();
@@ -221,20 +252,30 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View {
      * @param imgName the filename of the specific die image
      * @return the icon to display in the die button
      */
-    private ImageIcon createImage(String plugin, String imgName) {
+    private ImageIcon createImage(String plugin, String imgName)
+    {
         String pluginName = plugin.toLowerCase() + "yahtzee";
-        URL imgURL = getClass().getResource(pluginName + "/config/" + imgName);
-        return new ImageIcon(imgURL, "image");
+        java.net.URL imgURL = getClass()
+                .getResource("../" + pluginName + "/config/" + imgName);
+        if (imgURL != null)
+        {
+            return new ImageIcon(imgURL, "die image icon");
+        } else
+        {
+            return new ImageIcon("", "blank");
+        }
     }
 
     /**
      * An listener for quit events. An instance of this class should be added to
      * the Exit menu option.
      */
-    class MyQuitListener implements ActionListener {
+    class MyQuitListener implements ActionListener
+    {
 
         @Override
-        public void actionPerformed(ActionEvent event) {
+        public void actionPerformed(ActionEvent event)
+        {
             System.exit(0);
         }
     }

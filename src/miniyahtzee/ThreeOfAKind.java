@@ -18,53 +18,62 @@ public class ThreeOfAKind implements JahtzeeCategory {
 
     private int maxScore = 10;
     private boolean hasScored = false;
-    private int currentScore = 0;
+    private int score = 0;
     
     @Override
     public String getName() {
-        return "3 of a kind";
+        return "3 of a kind (10 pts)";
     }
 
     
 
     @Override
-    public int getCurrentScore(List<JahtzeeDie> dice) {
-        int score = 0;
+    public int calculateScore(List<JahtzeeDie> dice) {
         int numEqual;
-        if (hasScored) {
-            score = this.currentScore;
-        }
-        else {
+        // if we haven't scored, need to dynamically rescore
+        if (!hasScored) {
+            score = 0;
             for (JahtzeeDie die1 : dice) {
-                numEqual = 0;
+            numEqual = 0;
                 for (JahtzeeDie die2 : dice) {
-                    // skip same object, not equivalent
+                    // make sure to skip same object by comparing references
                     if (die1 != die2) {
                         if (die1.getFaceUpImage().equals(die2.getFaceUpImage())) {
                             numEqual += 1;
                         }
                     }
                 }
-                if (numEqual >= 3) {
+                if (numEqual >= 2) {
                     score = maxScore;
                     break;
                 }
+                
             }
         }
-        
         return score;
     }
 
     @Override
     public boolean canScore() {
-        return hasScored;
+        return !hasScored;
     }
     
     public void reset() {
         hasScored = false;
+        score = 0;
     }
     
     public void score() {
         hasScored = true;
+    }
+    
+    @Override
+    public int getCurrentScore()
+    {
+        int val = 0;
+        if (hasScored) {
+            val = score;
+        }
+        return val;
     }
 }

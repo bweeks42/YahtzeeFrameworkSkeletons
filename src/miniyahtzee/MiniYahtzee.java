@@ -31,7 +31,8 @@ public class MiniYahtzee implements JahtzeeGame {
     
     public List<JahtzeeCategory> getComboCategories() {
         List<JahtzeeCategory> categories = new ArrayList<>();
-        
+        categories.add(new ThreeOfAKind());
+        categories.add(new Straight());
         
         
         return categories;
@@ -39,7 +40,7 @@ public class MiniYahtzee implements JahtzeeGame {
 
     public List<JahtzeeBonus> getBonuses() {
         List<JahtzeeBonus> bonuses = new ArrayList<JahtzeeBonus>();
-        
+        bonuses.add(new PointBonus());
         
         
         return bonuses;

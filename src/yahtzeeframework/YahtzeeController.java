@@ -7,6 +7,7 @@ package yahtzeeframework;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
 /**
  *
@@ -14,10 +15,17 @@ import java.awt.event.ActionListener;
  */
 public class YahtzeeController implements ActionListener
 {
-
-    public void actionPerformed(ActionEvent e)
+    private final Jahtzee game;
+    public YahtzeeController(Jahtzee game) {
+        this.game = game;
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent evt)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (evt.getSource() instanceof JButton) {
+            game.processCommand(evt.getActionCommand());
+        }
     }
 
 }

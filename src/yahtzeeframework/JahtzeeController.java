@@ -23,6 +23,6 @@ class JahtzeeController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent evt) {
+        jahtzee.processCommand(evt.getActionCommand());
     }
-    
 }

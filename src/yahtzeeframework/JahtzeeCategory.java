@@ -7,7 +7,6 @@
 package yahtzeeframework;
 
 import java.util.List;
-import org.json.JSONObject;
 
 /**
  * Class that describes a scoring combination in a yahtzee game.
@@ -16,7 +15,11 @@ import org.json.JSONObject;
 public interface JahtzeeCategory {
 
     public String getName();
-    public int getCurrentScore(List<JahtzeeDie> dice);
+    public int getCurrentScore();
+    public int calculateScore(List<JahtzeeDie> dice);
 
     public boolean canScore();
+
+    public void score();
+    public void reset();
 }

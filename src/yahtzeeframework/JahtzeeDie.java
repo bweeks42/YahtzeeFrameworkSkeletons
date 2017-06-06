@@ -9,7 +9,6 @@ package yahtzeeframework;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  *
@@ -17,7 +16,7 @@ import org.json.JSONObject;
  */
 public class JahtzeeDie {
 
-    private List<JahtzeeFace> faces;
+    private final List<JahtzeeFace> faces;
     private int faceUp;
     
     private JahtzeeDie(List<JahtzeeFace> faces) {
@@ -31,17 +30,28 @@ public class JahtzeeDie {
         }
         return new JahtzeeDie(faces);
     }
-    
-    public void roll(int faceUp) {
-        this.faceUp = faceUp;
-    }
 
     public String getFaceUpImage() {
         return faces.get(faceUp).image;
     }
 
-    String getFaceUpString() {
+    public String getFaceUpTip() {
         return faces.get(faceUp).tooltip;
+    }
+
+    int faceNum()
+    {
+        return this.faces.size();
+    }
+
+    void setFace(int face)
+    {
+        this.faceUp = face;
+    }
+
+    public String getFaceUpName()
+    {
+        return faces.get(faceUp).name;
     }
     
 }
