@@ -14,7 +14,8 @@ import java.util.logging.Logger;
  *
  * @author Your Name
  */
-public class YahtzeeLoader {
+public class YahtzeeLoader
+{
 
     final YahtzeeGUI gui;   // made package-private for testing
     private static String dataFileName;
@@ -26,17 +27,21 @@ public class YahtzeeLoader {
      * @param pluginName The name of the plugin to be loaded.
      * @post gui is constructed. If plugin is not found, gui is null.
      */
-    public YahtzeeLoader(String pluginName) {
+    public YahtzeeLoader(String pluginName)
+    {
         String pluginPackage = pluginName.toLowerCase() + "yahtzee";
         String pluginClass = pluginPackage + "." + pluginName + "Yahtzee";
+
         Class plugin = null;
         Jahtzee jahtzee = null;
         JahtzeeController controller = null;
-        try {
+        try
+        {
             plugin = Class.forName(pluginClass);
             JahtzeeGame jahtzeePlugin = (JahtzeeGame) plugin.newInstance();
             String presetData = "";
-            if (dataFileName != null) {
+            if (dataFileName != null)
+            {
                 FileReader fr = new FileReader(dataFileName);
                 Scanner s = new Scanner(fr).useDelimiter("\\A");
                 presetData = s.next();
@@ -45,23 +50,34 @@ public class YahtzeeLoader {
             NumberGenerator generator = NumberGenerator.getInstance(presetData);
             jahtzee = new Jahtzee(jahtzeePlugin, pluginPackage, generator);
             controller = new JahtzeeController(jahtzee);
-        } catch (ClassNotFoundException ex) {
+        }
+        catch (ClassNotFoundException ex)
+        {
             System.out.println("Could not find class file " + pluginName);
-        } catch (InstantiationException ex) {
+        }
+        catch (InstantiationException ex)
+        {
             System.out.println("Unable to instantiate " + pluginClass);
-        } catch (IllegalAccessException ex) {
+        }
+        catch (IllegalAccessException ex)
+        {
             System.out.println("Illegal access to " + pluginClass);
-        } catch (FileNotFoundException ex) {
+        }
+        catch (FileNotFoundException ex)
+        {
             System.out.println("Unable to find " + dataFileName);
         }
 
         // if plugin was instantiated correctly
-        if (plugin != null) {
+        if (plugin != null)
+        {
             gui = new YahtzeeGUI(pluginName, controller,
                     jahtzee.getDiceLimit());
             jahtzee.addObserver(gui);
             gui.update(jahtzee, null);
-        } else {
+        }
+        else
+        {
             gui = null;
         }
     }
@@ -75,16 +91,19 @@ public class YahtzeeLoader {
      * @return String plugin name.
      */
     @SuppressWarnings("deprecation")
-    static String processArgs(String[] args) {
+    static String processArgs(String[] args)
+    {
         dataFileName = null;
         String pluginName = "";
-        if (args.length > 0) {
-            if ("-r".equals(args[0])) {
-                dataFileName = args[1];
-                pluginName = args[2];
-            } else {
-                pluginName = args[0];
-            }
+
+        if (args.length == 3 && "-r".equals(args[0]))
+        {
+            dataFileName = args[1];
+            pluginName = args[2];
+        }
+        else if (args.length == 1)
+        {
+            pluginName = args[0];
         }
         return pluginName;
     }
@@ -95,13 +114,16 @@ public class YahtzeeLoader {
      *
      * @param args the command line arguments (See processArgs)
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         String pluginName = YahtzeeLoader.processArgs(args);
         // If a plugin name was provided
-        if (pluginName.length() > 0) {
+        if (pluginName.length() > 0)
+        {
             YahtzeeLoader loader = new YahtzeeLoader(pluginName);
             // If plugin was not found, gui will be null
-            if (loader.gui != null) {
+            if (loader.gui != null)
+            {
                 /* Make the JFrame visible */
                 loader.gui.setVisible(true);
             }

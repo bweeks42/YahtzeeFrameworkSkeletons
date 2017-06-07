@@ -6,9 +6,10 @@
 package yahtzeeframework;
 
 import java.util.List;
-import org.json.JSONObject;
+import org.ini4j.Ini;
 
 /**
+ * A JahtzeeCategory to keep track of scoring for each face category.
  *
  * @author Blain
  */
@@ -22,18 +23,20 @@ class JahtzeeFaceCategory implements JahtzeeCategory
 
     /**
      * Creates and returns a JahtzeeFaceCategory if one can be created.
-     * Otherwise returns null.
+     * Otherwise returns null. Categories cannot be created if the value of the
+     * face is 0
      *
-     * @param face JSONObject representing the face.
+     * @param face Ini.Section representing the configuration of a face.
      * @return created JahtzeeFaceCategory
      */
-    public static JahtzeeFaceCategory createCategory(JSONObject face)
+    public static JahtzeeFaceCategory createCategory(Ini.Section face)
     {
         JahtzeeFaceCategory cat = null;
-        if (face.getInt("value") != 0)
+        // create if face value is not 0
+        if (Integer.parseInt(face.get("value")) != 0)
         {
-            cat = new JahtzeeFaceCategory(face.getInt("value"),
-                    face.getString("name"));
+            cat = new JahtzeeFaceCategory(Integer.parseInt(face.get("value")),
+                    face.get("name"));
         }
         return cat;
     }
@@ -46,19 +49,36 @@ class JahtzeeFaceCategory implements JahtzeeCategory
         score = 0;
     }
 
+    /**
+     * Gets the name of the category
+     *
+     * @return the name of the category
+     */
     @Override
     public String getName()
     {
         return this.name;
     }
 
+    /**
+     * Calculates whether the category has been scored based on the state of the
+     * dice. If this category has not been scored, the current score is set to
+     * the calculated value.
+     *
+     * @param dice list of dice used to determine the category score
+     * @return the current score of the category.
+     */
     @Override
     public int calculateScore(List<JahtzeeDie> dice)
     {
-        if (!hasScored) {
+        // if we haven't scored yet
+        if (!hasScored)
+        {
             score = 0;
+            // look at each die
             for (JahtzeeDie die : dice)
             {
+                // if die matches this categories name
                 if (die.getFaceUpName().equals(name))
                 {
                     score += this.value;
@@ -68,28 +88,48 @@ class JahtzeeFaceCategory implements JahtzeeCategory
         return score;
     }
 
+    /**
+     * Set this category as scored
+     */
     public void score()
     {
         this.hasScored = true;
     }
 
+    /**
+     * Determines whether this category can still be scored.
+     *
+     * @return whether this category can still be scored
+     */
     @Override
     public boolean canScore()
     {
         return !hasScored;
     }
 
+    /**
+     * Resets this category to its initial state
+     */
+    @Override
     public void reset()
     {
         hasScored = false;
         score = 0;
     }
 
+    /**
+     * Gets the current score of the category. If the category has not been
+     * scored, returns 0.
+     *
+     * @return the current score of the category
+     */
     @Override
     public int getCurrentScore()
     {
         int val = 0;
-        if (hasScored) {
+        // if we've scored
+        if (hasScored)
+        {
             val = score;
         }
         return val;

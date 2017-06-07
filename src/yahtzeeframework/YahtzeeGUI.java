@@ -124,7 +124,7 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
                     // Set the fields for this row
                     scorerow.setFields(
                             Integer.toString(
-                                    category.calculateScore(game.getDice())),
+                                    category.calculateScore(game.getDiceInPlay())),
                             prefix + row,
                             category.getName());
                     // If scoring is inactive the buttons should be shown grey
@@ -136,7 +136,7 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
                             "",
                             "c" + row,
                             "<HTML><B>&nbsp;" + Integer.toString(
-                                    category.calculateScore(game.getDice()))
+                                    category.calculateScore(game.getDiceInPlay()))
                             + "</B>&nbsp;&nbsp;&nbsp;"
                             + category.getName() + "</HTML>");
                 } // END IF
@@ -259,7 +259,7 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
                 .getResource("../" + pluginName + "/config/" + imgName);
         if (imgURL != null)
         {
-            return new ImageIcon(imgURL, "die image icon");
+            return new ImageIcon(imgURL, imgName);
         } else
         {
             return new ImageIcon("", "blank");

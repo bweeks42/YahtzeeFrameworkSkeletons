@@ -3,29 +3,39 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package miniyahtzee;
+package rainbowyahtzee;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import yahtzeeframework.JahtzeeCategory;
 import yahtzeeframework.JahtzeeDie;
 
 /**
- * Models a combo category in the game of mini yahtzee. If a continuous series
- * of dice values is found that exceeds 3, the category can be scored. For
- * example : 1-2-3-6-4 can be scored because 1-2-3-4 are 4 continuous dice
- * values.
+ * Models a combo category in the game of rainbow yahtzee. If N of the same kind
+ * of dice are rolled at the same time, this category can be scored.
  *
  * Once this category is scored, it will keep its score until the game is reset.
  *
  * @author Blain
  */
-public class Straight implements JahtzeeCategory
+public class NOfAKind implements JahtzeeCategory
 {
 
-    private int score = 0;
+    private final int N;
+    private final int points;
     private boolean hasScored = false;
+    private int score = 0;
+
+    /**
+     * Constructor for NOfAKind
+     *
+     * @param number number of matching dice required to score
+     * @param points point value earned when scoring
+     */
+    public NOfAKind(int number, int points)
+    {
+        this.N = number;
+        this.points = points;
+    }
 
     /**
      * Returns the name of the category
@@ -35,7 +45,7 @@ public class Straight implements JahtzeeCategory
     @Override
     public String getName()
     {
-        return "Straight (25 pts)";
+        return N + " of a kind (" + points + " pts)";
     }
 
     /**
@@ -49,34 +59,37 @@ public class Straight implements JahtzeeCategory
     @Override
     public int calculateScore(List<JahtzeeDie> dice)
     {
-        // if we haven't scored yet
+        int numEqual;
+        // if we haven't scored, need to dynamically rescore
         if (!hasScored)
         {
             score = 0;
-            List<String> names = new ArrayList<>();
-            // for every die, gather up the names
-            for (JahtzeeDie die : dice)
+            // for each die we've been given
+            for (JahtzeeDie die1 : dice)
             {
-                names.add(die.getFaceUpName());
-            }
-            String[] hand =
-            {
-                "threes", "fours"
-            };
-            List<String> mid = Arrays.asList(hand);
-            // see if the list of names contains the required two names
-            if (names.containsAll(mid))
-            {
-                // see if the list has contains a required pair of names
-                if (names.contains("ones") && names.contains("twos")
-                        || names.contains("twos") && names.contains("fives")
-                        || names.contains("fives") && names.contains("sixes"))
+                numEqual = 1;
+                // look at the other dice
+                for (JahtzeeDie die2 : dice)
                 {
-                    score = 25;
+                    // make sure to skip same object by comparing references
+                    if (die1 != die2)
+                    {
+                        // compare the face up image names
+                        if (die1.getFaceUpImage().equals(die2.getFaceUpImage()))
+                        {
+                            numEqual += 1;
+                        }
+                    }
                 }
+                // if we have N or more matches
+                if (numEqual >= N)
+                {
+                    score = points;
+                    break;
+                }
+
             }
         }
-
         return score;
     }
 
@@ -92,21 +105,20 @@ public class Straight implements JahtzeeCategory
     }
 
     /**
-     * Maintains the current score until reset
-     */
-    @Override
-    public void score()
-    {
-        hasScored = true;
-    }
-
-    /**
      * Resets the category to its initial state
      */
     public void reset()
     {
         hasScored = false;
         score = 0;
+    }
+
+    /**
+     * Maintains the current score until reset
+     */
+    public void score()
+    {
+        hasScored = true;
     }
 
     /**
@@ -119,11 +131,11 @@ public class Straight implements JahtzeeCategory
     public int getCurrentScore()
     {
         int val = 0;
+        // if we have scored
         if (hasScored)
         {
             val = score;
         }
         return val;
     }
-
 }
