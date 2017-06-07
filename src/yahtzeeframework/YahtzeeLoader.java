@@ -40,11 +40,12 @@ public class YahtzeeLoader
             plugin = Class.forName(pluginClass);
             JahtzeeGame jahtzeePlugin = (JahtzeeGame) plugin.newInstance();
             String presetData = "";
+            // if we were given a data file
             if (dataFileName != null)
             {
                 FileReader fr = new FileReader(dataFileName);
-                Scanner s = new Scanner(fr).useDelimiter("\\A");
-                presetData = s.next();
+                Scanner scn = new Scanner(fr).useDelimiter("\\A");
+                presetData = scn.next();
 
             }
             NumberGenerator generator = NumberGenerator.getInstance(presetData);
@@ -96,11 +97,14 @@ public class YahtzeeLoader
         dataFileName = null;
         String pluginName = "";
 
+        // given a data file
         if (args.length == 3 && "-r".equals(args[0]))
         {
             dataFileName = args[1];
             pluginName = args[2];
         }
+        
+        // given just a plugin
         else if (args.length == 1)
         {
             pluginName = args[0];

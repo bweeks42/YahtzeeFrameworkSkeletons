@@ -35,4 +35,8 @@ public class YahtzeeLoaderTest extends TestCase
         yahtzeeframework.YahtzeeGUI gui = loader.gui;
         assertEquals("Mini Yahtzee", gui.getTitle());
     }
+
+    public void testProcessArgs()
+    {
+    }
 }

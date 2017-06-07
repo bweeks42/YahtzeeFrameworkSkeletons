@@ -119,6 +119,7 @@ public class Straight implements JahtzeeCategory
     public int getCurrentScore()
     {
         int val = 0;
+        // if we've scored, use internal score
         if (hasScored)
         {
             val = score;

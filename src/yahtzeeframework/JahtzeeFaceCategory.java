@@ -13,7 +13,7 @@ import org.ini4j.Ini;
  *
  * @author Blain
  */
-class JahtzeeFaceCategory implements JahtzeeCategory
+final class JahtzeeFaceCategory implements JahtzeeCategory
 {
 
     private final int value;

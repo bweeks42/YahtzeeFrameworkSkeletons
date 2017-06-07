@@ -20,7 +20,7 @@ import yahtzeeframework.JahtzeeDie;
 public class NOfAKind implements JahtzeeCategory
 {
 
-    private final int N;
+    private final int num;
     private final int points;
     private boolean hasScored = false;
     private int score = 0;
@@ -33,24 +33,26 @@ public class NOfAKind implements JahtzeeCategory
      */
     public NOfAKind(int number, int points)
     {
-        this.N = number;
+        this.num = number;
         this.points = points;
     }
 
     /**
      * Returns the name of the category
+     *
      * @return the name of the category
      */
     @Override
     public String getName()
     {
-        return N + " of a kind (" + points + " pts)";
+        return num + " of a kind (" + points + " pts)";
     }
 
     /**
      * Calculates and returns the score of the category given the presented
      * dice. If this category has not been scored, it also sets the current
      * score to the calculated score.
+     *
      * @param dice List of dice used to calculate score
      * @return calculated score
      */
@@ -80,7 +82,7 @@ public class NOfAKind implements JahtzeeCategory
                     }
                 }
                 // if we have N or more matches
-                if (numEqual >= N)
+                if (numEqual >= num)
                 {
                     score = points;
                     break;
@@ -93,6 +95,7 @@ public class NOfAKind implements JahtzeeCategory
 
     /**
      * Whether the category can be scored
+     *
      * @return whether the category can be scored
      */
     @Override
@@ -119,8 +122,9 @@ public class NOfAKind implements JahtzeeCategory
     }
 
     /**
-     * Get the score that has been counted by the game. If the category has
-     * been scored, it returns the scored value. Otherwise, it will be 0.
+     * Get the score that has been counted by the game. If the category has been
+     * scored, it returns the scored value. Otherwise, it will be 0.
+     *
      * @return the score that has been counted by the game
      */
     @Override

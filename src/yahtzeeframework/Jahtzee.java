@@ -309,14 +309,16 @@ public class Jahtzee extends Observable
 
     private void roll()
     {
-        // roll all dice on first roll of game
+        // put all dice in rolled on game start
         if (rolled.isEmpty())
         {
+            // put all in rolled
             for (JahtzeeDie die : dice)
             {
                 rolled.add(die);
             }
         }
+        // roll every die
         for (JahtzeeDie die : rolled)
         {
             die.setFace(generator.nextInt(die.faceNum()));
@@ -397,5 +399,6 @@ public class Jahtzee extends Observable
             cat.reset();
         }
         round = 0;
+        rolls = 0;
     }
 }

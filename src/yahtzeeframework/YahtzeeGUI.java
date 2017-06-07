@@ -28,10 +28,13 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
     private JahtzeeController controller; // controller for game
 
     /**
-     * Constructs a new YahtzeeGUI object. You may modify this as needed.
+     * Constructs a new YahtzeeGUI object. You may modify this as needed. 
      *
      * @param name The plugin name that will be displayed in the window title.
      * Also used to locate the folder in which images are stored.
+     * @param controller JahtzeeController to maintain interaction between GUI
+     * and model
+     * @param maxDice max number of dice used in this game 
      */
     public YahtzeeGUI(String name, JahtzeeController controller, int maxDice)
     {
@@ -39,7 +42,8 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
         {
             String cn = UIManager.getSystemLookAndFeelClassName();
             UIManager.setLookAndFeel(cn);
-        } catch (Exception cnf)
+        }
+        catch (Exception cnf)
         {
             cnf.printStackTrace();
         }
@@ -71,6 +75,7 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
     @Override
     public void update(Observable obs, Object arg)
     {
+        // if we have an actual update
         if (obs != null)
         {
             Jahtzee game = (Jahtzee) obs;
@@ -129,7 +134,8 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
                             category.getName());
                     // If scoring is inactive the buttons should be shown grey
                     scorerow.setEnabled(game.canScore());
-                } else
+                }
+                else
                 {
                     // show score assigned to this category
                     scorerow.setFields(
@@ -140,7 +146,8 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
                             + "</B>&nbsp;&nbsp;&nbsp;"
                             + category.getName() + "</HTML>");
                 } // END IF
-            } else
+            }
+            else
             {
                 // set invisible: unused rows take up space but aren't visible
                 scorerow.setVisible(false);
@@ -204,7 +211,7 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
             JButton currentDie = (JButton) pnlDice.getComponent(dieCount);
             JahtzeeDie currentJDie;
             // Draw the Rolled Dice
-
+            // if we can still draw rolled dice
             if (dieCount < rolled.size())
             {
                 currentJDie = rolled.get(dieCount);
@@ -217,14 +224,16 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
                 currentDie.setEnabled(game.canMoveDice());  // only enable if we can roll
                 currentDie.setVisible(true);
 
-            } else
+            }
+            else
             {
                 currentDie.setVisible(false);
             }
-            
+
             currentDie = (JButton) pnlHold.getComponent(dieCount);
-            if (dieCount >= rolled.size() && 
-                    dieCount - rolled.size() < held.size())
+            // if we can draw held dice
+            if (dieCount >= rolled.size()
+                    && dieCount - rolled.size() < held.size())
             {
                 currentJDie = held.get(dieCount - rolled.size());
                 ImageIcon ico;
@@ -235,7 +244,8 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
                 currentDie.setActionCommand("h" + (dieCount - rolled.size()));
                 currentDie.setEnabled(game.canMoveDice()); // only enable if we can roll 
                 currentDie.setVisible(true);
-            } else
+            }
+            else
             {
                 currentDie.setVisible(false);
             }
@@ -257,10 +267,12 @@ public class YahtzeeGUI extends javax.swing.JFrame implements I_View
         String pluginName = plugin.toLowerCase() + "yahtzee";
         java.net.URL imgURL = getClass()
                 .getResource("../" + pluginName + "/config/" + imgName);
+        // if image was found
         if (imgURL != null)
         {
             return new ImageIcon(imgURL, imgName);
-        } else
+        }
+        else
         {
             return new ImageIcon("", "blank");
         }

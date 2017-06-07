@@ -20,7 +20,7 @@ import yahtzeeframework.JahtzeeDie;
 public class NOfAKind implements JahtzeeCategory
 {
 
-    private final int N;
+    private final int num;
     private final int points;
     private boolean hasScored = false;
     private int score = 0;
@@ -33,7 +33,7 @@ public class NOfAKind implements JahtzeeCategory
      */
     public NOfAKind(int number, int points)
     {
-        this.N = number;
+        this.num = number;
         this.points = points;
     }
 
@@ -45,7 +45,7 @@ public class NOfAKind implements JahtzeeCategory
     @Override
     public String getName()
     {
-        return N + " of a kind (" + points + " pts)";
+        return num + " of a kind (" + points + " pts)";
     }
 
     /**
@@ -82,7 +82,7 @@ public class NOfAKind implements JahtzeeCategory
                     }
                 }
                 // if we have N or more matches
-                if (numEqual >= N)
+                if (numEqual >= num)
                 {
                     score = points;
                     break;

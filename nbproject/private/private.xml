@@ -4,7 +4,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/bweeks/Code/School/cpe305/YahtzeeFrameworkSkeletons/src/yahtzeeframework/YahtzeeGUI.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/test/yahtzeeframework/SmokeTest.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/rainbowyahtzee/NOfAKind.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/JahtzeeController.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/ScoreRow.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/test/miniyahtzee/NOfAKindTest.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/JahtzeeCategory.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/miniyahtzee/Straight.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/JahtzeeGame.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/build.xml</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/JahtzeeFace.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/YahtzeeGUI.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/test/miniyahtzee/MiniYahtzeeTest.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/test/yahtzeeframework/YahtzeeLoaderTest.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/rainbowyahtzee/config/config.ini</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/NumberGenerator.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/Jahtzee.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/miniyahtzee/MiniYahtzee.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/miniyahtzee/NOfAKind.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/JahtzeeFaceCategory.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/rainbowyahtzee/RainbowYahtzee.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/YahtzeeLoader.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/miniyahtzee/config/config.ini</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/JahtzeeBonus.java</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/rolldata2.txt</file>
+            <file>file:/home/blain/NetBeansProjects/YahtzeeFrameworkSkeletons/src/yahtzeeframework/JahtzeeDie.java</file>
         </group>
     </open-files>
 </project-private>

@@ -46,4 +46,8 @@ public class NumberGeneratorTest extends TestCase
         assertTrue(result >= 0);
         assertTrue(result < 5);
     }
+
+    public void testReset()
+    {
+    }
 }
